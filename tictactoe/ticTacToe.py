@@ -1,4 +1,18 @@
+"""
+.. module:: ticTacToe
+	:plataform: Unix, Windows
+	:synopsis: This module its the engine of the Tic Tac Toe Board and the engine of the CPU Player for Tic Tac Toe
+	
+.. moduleauthor:: Ricardo Tercero Solis <tercero3@hotmail.com>
+"""
+
 class TicTacToeCPU:
+    """This Class is the engine for CPU Player.
+
+    You need to call first the TicTacToeEngine class to get board info for the CPU Player
+
+    """
+
 	current = [
 		[None , None , None ,] ,
 		[None , None , None ,] ,
@@ -37,6 +51,14 @@ class TicTacToeCPU:
 	]
 	
 	def __init__(self , current = None , moves = None , cpu_peace = None , opp_peace = None):
+	    """Initialize the class.
+
+	    :param current: The Current state of the game board.
+	    :type current: Array.
+	    :param moves: The number of remain moves in the game.
+	    :type moves: int.
+
+	    """
 		if current:
 			self.current = current
 			print "current %s" % self.current
@@ -59,7 +81,11 @@ class TicTacToeCPU:
 		self.blank = self.getState(None)
 		
 	def getMove(self):
-		
+	    """This function figure the next move for CPU Player.
+
+	    :returns:  int, int -- Return the X and Y position in the board of the next move.
+
+	    """
 		if self.isFirstMove():
 			#Is the first move
 			import random
@@ -130,6 +156,11 @@ class TicTacToeCPU:
 			
 
 	def couldOppenetWin(self):
+	    """Figure if the opponent has a winning move in their next ove.
+
+	    :returns:  bool -- True if Yes and False if No.
+
+	    """
 		if len(self.opponent) > 1:
 			paths = self.getWiningPaths(player = self.opponent , opponent = self.cpu , moves = 1)
 			if len(paths) > 0:
@@ -137,6 +168,11 @@ class TicTacToeCPU:
 		return False
 		
 	def blockOponnet(self):
+	    """Figure the position to block the winning move of the opponent.
+
+	    :returns:  int, int -- Return the X and Y position in the board of the next move.
+
+	    """
 		paths = self.getWiningPaths(player = self.opponent , opponent = self.cpu , moves = 1)
 		print paths
 		for path in paths:
@@ -160,6 +196,17 @@ class TicTacToeCPU:
 		return None , None
 			
 	def getWiningPaths(self , player , opponent , moves = None):
+	    """Return the Coordinate of the Opposite Corner.
+	
+	    :param player: The choice positions of the player
+	    :type player: Array.
+	    :param opponent: The choice positions of the player's opponent.
+	    :type opponent: Array.
+	    :param moves: Number of moves in the path needed to win.
+	    :type moves: int.
+	    :returns:  Array -- Returns the possible winning paths.
+
+	    """
 		paths = []
 		for path in self.WINS:
 			moves_to_win = 3
@@ -185,6 +232,13 @@ class TicTacToeCPU:
 		return aux
 
 	def getState(self , value):
+	    """Return choice positions.
+	
+	    :param value: The figure to look in the board (X or O)
+	    :type value: str.
+	    :returns:  Array -- Returns the possible winning paths.
+
+	    """
 		state = []
 		for x , line in enumerate(self.current):
 			for y , pos in enumerate(line):
@@ -194,36 +248,83 @@ class TicTacToeCPU:
 		return state
 
 	def isCorner(self , x , y):
+	    """Return if the coordinate is corner.
+	
+	    :param x: The X coordinate
+	    :type x: int.
+	    :param y: The Y coordinate
+	    :type y: int.
+	    :returns:  boo -- Returns True if Yes or False if not.
+
+	    """
 		for corner in self.CORNERS:
 			if str(corner['x']) == str(x) and str(corner['y']) == str(y):
 				return True
 		return False
 		
 	def isSide(self , x , y):
+	    """Return if the coordinate is side.
+	
+	    :param x: The X coordinate
+	    :type x: int.
+	    :param y: The Y coordinate
+	    :type y: int.
+	    :returns:  boo -- Returns True if Yes or False if not.
+
+	    """
 		for side in self.SIDES:
 			if str(side['x']) == str(x) and str(side['y']) == str(y):
 				return True
 		return False
 		
 	def isCenter(self , x , y):
+	    """Return if the coordinate is center.
+	
+	    :param x: The X coordinate
+	    :type x: int.
+	    :param y: The Y coordinate
+	    :type y: int.
+	    :returns:  boo -- Returns True if Yes or False if not.
+
+	    """
 		if '1' == str(x) and '1' == str(y):
 			return True
 		return False
 	
 	def isFirstMove(self):
+	    """Figures if the CPU Player has the First Move of the game.
+
+	    :returns:  bool -- True if Yes and False if No.
+
+	    """
 		if self.moves == 9:
 			return True
 		return False
 		
 	def isThirdMove(self):
+	    """Figures if the CPU Player has the Third Move of the game.
+
+	    :returns:  bool -- True if Yes and False if No.
+
+	    """
 		if self.moves == 7:
 			return True
 		return False
 		
 	def getCenter(self):
+	    """Returns the X and Y of the Center of the Board.
+
+	    :returns:  int, int -- Return the X and Y Center of the Board.
+
+	    """
 		return self.getPosition(1 , 1)
 		
 	def getAnyFreePosition(self):
+	    """Returns the X and Y of any Random Free Position.
+
+	    :returns:  int, int -- Return the X and Y Center of the Board.
+
+	    """
 		if len(self.blank) > 0:
 			import random
 			index = random.randrange(0,len(self.blank))
@@ -232,6 +333,11 @@ class TicTacToeCPU:
 		return None , None
 		
 	def getFreeCorner(self):
+	    """Returns the X and Y of a Free Corner.
+
+	    :returns:  int, int -- Returns the X and Y of a Free Corner.
+
+	    """
 		for position in self.CORNERS:
 			x , y = self.getPosition(position['x'] , position['y'])
 			if x and y:
@@ -239,6 +345,15 @@ class TicTacToeCPU:
 		return None , None
 		
 	def getOppositeCorner(self , x , y):
+	    """Return the Coordinate of the Opposite Corner.
+	
+	    :param x: The X coordinate
+	    :type x: int.
+	    :param y: The Y coordinate.
+	    :type y: int.
+	    :returns:  int, int -- Returns the X and Y of the Coordinate of the Opposite Corner.
+
+	    """
 		if x and y:
 			if int(x) == 0 and int(y) == 0:
 				return self.getPosition(2 , 2)
@@ -251,6 +366,15 @@ class TicTacToeCPU:
 		return None , None
 		
 	def getAsideCorner(self , x , y):
+	    """Return the Coordinate of the available Corner Horizontal or Vertical.
+	
+	    :param x: The X coordinate
+	    :type x: int.
+	    :param y: The Y coordinate.
+	    :type y: int.
+	    :returns:  int, int -- Returns the X and Y of the available Corner Horizontal or Vertical.
+
+	    """
 		if x and y:
 			if int(x) == 0 and int(y) == 0:
 				x, y = self.getPosition(0 , 2)
@@ -275,6 +399,15 @@ class TicTacToeCPU:
 		return None , None
 		
 	def getOppositeSide(self , x , y):
+	    """Return the Coordinate of the opposite position.
+	
+	    :param x: The X coordinate
+	    :type x: int.
+	    :param y: The Y coordinate.
+	    :type y: int.
+	    :returns:  int, int -- Returns the X and Y of the opposite Side.
+
+	    """
 		if x and y:
 			if int(x) == 0 and int(y) == 1:
 				return self.getPosition(2 , 1)
@@ -286,12 +419,28 @@ class TicTacToeCPU:
 				return self.getPosition(1 , 0)
 		return None , None
 		
-	def getPosition(self , x , y):		
+	def getPosition(self , x , y):
+	    """Check if the coordinate is available.
+	
+	    :param x: The X coordinate
+	    :type x: int.
+	    :param y: The Y coordinate
+	    :type y: int.
+	    :returns:  int , int -- Returns X , Y coordinates if are available or None , None if not.
+
+	    """	
 		if self.current[x][y]:
 			return None , None
 		return x , y
 		
 	def hasCorner(self , player):
+	    """Figure if the Player has a Corner Position.
+	
+	    :param player: The choice positions of the player
+	    :type player: Array.
+	    :returns:  boo -- Return True if Yes, False if not.
+
+	    """
 		for position in player:
 			for corner in self.CORNERS:
 				if position[0] == str(corner['x']) and position[1] == str(corner['y']):
@@ -299,12 +448,28 @@ class TicTacToeCPU:
 		return False
 	
 	def hasCenter(self , player):
+	    """Figure if the Player has the Center of the Board.
+	
+	    :param player: The choice positions of the player
+	    :type player: Array.
+	    :returns:  boo -- Return True if Yes, False if not.
+
+	    """
 		for position in player:
 			if position[0] == '1' and position[1] == '1':
 				return True
 		return False
 	
 	def getAnyFurthestCorner(self , x , y):
+	    """Returns the Furthest Corners based on the Parameters.
+	
+	    :param x: The X coordinate
+	    :type x: int.
+	    :param y: The Y coordinate.
+	    :type y: int.
+	    :returns:  Array -- Returns an Array with free Furthest Corner.
+
+	    """
 		pos = self.getFurthestCorners(x , y)
 		if len(pos) > 0:
 			import random
@@ -314,6 +479,15 @@ class TicTacToeCPU:
 		return None , None
 	
 	def getFurthestCorners(self , x , y):
+	    """Returns the X and Y of the Furthest Corner based on the Parameters.
+	
+	    :param x: The X coordinate
+	    :type x: int.
+	    :param y: The Y coordinate.
+	    :type y: int.
+	    :returns:  int, int -- Returns the X and Y of a Free Corner.
+
+	    """
 		if int(x) == 0 and int(y) == 1:
 			return [ '20' , '22' ]
 		if int(x) == 1 and int(y) == 2:
@@ -325,6 +499,10 @@ class TicTacToeCPU:
 		return []
 
 class TicTacToeEngine:
+    """This Class is the engine for the board.
+
+    """
+
 	_CROSS = 'X'
 	_NOUGHT = 'O'
 	current = [
@@ -353,10 +531,16 @@ class TicTacToeEngine:
 	}
 	
 	def setLast(self , last):
+	    """Set the Last Move in the Game.
+
+	    """
 		if last:
 			self.last = last
 	
 	def setBoard(self , state):
+	    """Translate a string representing the state of the board.
+
+	    """
 		x = 0
 		y = 0
 		for s in state:
@@ -373,6 +557,11 @@ class TicTacToeEngine:
 				break
 
 	def getBoard(self):
+	    """Get the String representing the board.
+
+		:returns: str - Get the String representing the board
+
+	    """
 		state = ""
 		for x , line in enumerate(self.current):
 			for y , pos in enumerate(line):
@@ -382,6 +571,11 @@ class TicTacToeEngine:
 		return state
 
 	def getLog(self):
+	    """Get the String of the move of the player.
+
+		:returns: str - Get the String of the move of the player
+
+	    """
 		msg = "Puts %s in the" % self.last['value']
 		if self.last['y'] == 0 and self.last['x'] == 0:
 			msg  = "%s %s" % (msg , "Top Left Corner")
@@ -404,6 +598,9 @@ class TicTacToeEngine:
 		return msg
 	
 	def initializeGame(self):
+	    """Set the values of the board ready to start the game.
+
+	    """
 		self.cross = []
 		self.nought = []
 		self.blank = []
@@ -415,11 +612,23 @@ class TicTacToeEngine:
 		]
 	
 	def isDraw(self):
+	    """Check if the game is Draw.
+	
+		:returns: boo - True if yes or False if not
+
+	    """
 		if len(self.blank) == 9 or self.moves == 0:
 			return True
 		return False
 	
 	def hasWon(self , state):
+	    """Check if the state has any winning path full.
+	
+	    :param state: The coordinates of the positions that has a value (X or Y)
+	    :type state: Array.
+		:returns: boo - True if yes or False if not
+
+	    """
 		if self.moves == 9:
 			return False
 		for win in self.wins:
@@ -434,6 +643,13 @@ class TicTacToeEngine:
 		return False
 		
 	def getState(self , value):
+	    """Get the positions that has the value.
+	
+	    :param value: Either X or O
+	    :type value: str.
+		:returns: Array - The coordinates of the positions that has the value
+
+	    """
 		state = []
 		for x , line in enumerate(self.current):
 			for y , pos in enumerate(line):
@@ -443,6 +659,17 @@ class TicTacToeEngine:
 		return state
 		
 	def setMovement(self, value , x , y):
+	    """Set the Choice if the position if available.
+	
+	    :param value: Either X or O
+	    :type value: str.
+	    :param x: The X Coordinate
+	    :type x: int.
+	    :param y: The X Coordinate
+	    :type y: int.
+		:raises: Exception
+
+	    """
 		x = int(x)
 		y = int(y)
 		if x > 2:
@@ -460,6 +687,17 @@ class TicTacToeEngine:
 		}
 		
 	def move(self , value , x , y):
+	    """Try to take the position in the Coordinate X and Y, verify if the Player Won or if the game has Draw.
+	
+	    :param value: Either X or O
+	    :type value: str.
+	    :param x: The X Coordinate
+	    :type x: int.
+	    :param y: The X Coordinate
+	    :type y: int.
+		:raises: Exception
+
+	    """
 		if value == self.last['value']:
 			raise Exception("You can not Move Because is not Your Turn")
 		self.setMovement(value , x , y)
