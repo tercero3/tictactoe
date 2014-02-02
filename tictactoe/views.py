@@ -29,7 +29,6 @@ def begin_board(request):
 	import datetime
 	today = datetime.datetime.now()
 	time = today.strftime("%d/%m/%y %H:%M:%S")
-#	begins = "you"
 	log = "You are %s and CPU is %s" % (yours , cpu)
 	if begins == "you":
 		log = "%s, %s begin" % (log , begins)
@@ -82,20 +81,7 @@ def post_cpu_move(request):
 			engine.setLast(last)
 			cpu = CPU(current = engine.current , moves = engine.moves , cpu_peace = piece , opp_peace = opp_peace)
 			x , y = cpu.getMove()
-#			print "%s %s" %(x , y)
-#			s
 			engine.move(piece , x , y)
-#			loop = True
-#			import random
-#			while loop:
-#				try:
-#					loop = False
-#					x = random.randrange(0,3)
-#					y = random.randrange(0,3)
-#					engine.move(piece , x , y)
-#				except:
-#					pass
-#			engine.move(piece , x , y)
 			board = engine.getBoard()
 			last_move = engine.last['value']
 			last_x = engine.last['x']
@@ -103,15 +89,6 @@ def post_cpu_move(request):
 			import datetime
 			today = datetime.datetime.now()
 			time = today.strftime("%d/%m/%y %H:%M:%S")
-			data = {
-				"board" : board ,
-				"last_move" : last_move ,
-				"last_x" : last_x ,
-				"last_y" : last_y ,
-				"moves" : engine.moves ,
-				"log" : engine.getLog() ,
-				"time" : time ,
-			}
 			data = {
 				"board" : board ,
 				"last_move" : last_move ,
@@ -131,7 +108,6 @@ def post_cpu_move(request):
 				last_y = engine.last['y']
 				import datetime
 				today = datetime.datetime.now()
-	#			time = today.strftime("%d, %b %Y - %H:%M:%S")
 				time = today.strftime("%d/%m/%y %H:%M:%S")
 				data = {
 					"board" : board ,
@@ -151,7 +127,6 @@ def post_cpu_move(request):
 				last_y = engine.last['y']
 				import datetime
 				today = datetime.datetime.now()
-	#			time = today.strftime("%d, %b %Y - %H:%M:%S")
 				time = today.strftime("%d/%m/%y %H:%M:%S")
 				data = {
 					"board" : board ,
@@ -176,13 +151,7 @@ def post_cpu_move(request):
 		}
 	data = simplejson.dumps(data)
 	return HttpResponse(data, mimetype='application/json')
-	
-	
-	
-	
-#	data = simplejson.dumps({})
-#	return HttpResponse(data, mimetype='application/json')
-	
+
 def post_your_move(request):
 	if request.method == 'GET':
 		x = request.GET['x'] or None
@@ -214,7 +183,6 @@ def post_your_move(request):
 			last_y = engine.last['y']
 			import datetime
 			today = datetime.datetime.now()
-#			time = today.strftime("%d, %b %Y - %H:%M:%S")
 			time = today.strftime("%d/%m/%y %H:%M:%S")
 			data = {
 				"board" : board ,
@@ -235,7 +203,6 @@ def post_your_move(request):
 				last_y = engine.last['y']
 				import datetime
 				today = datetime.datetime.now()
-	#			time = today.strftime("%d, %b %Y - %H:%M:%S")
 				time = today.strftime("%d/%m/%y %H:%M:%S")
 				data = {
 					"board" : board ,
@@ -255,7 +222,6 @@ def post_your_move(request):
 				last_y = engine.last['y']
 				import datetime
 				today = datetime.datetime.now()
-	#			time = today.strftime("%d, %b %Y - %H:%M:%S")
 				time = today.strftime("%d/%m/%y %H:%M:%S")
 				data = {
 					"board" : board ,

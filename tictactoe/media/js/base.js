@@ -48,27 +48,12 @@ var YOURS_SUCCESS = function(data){
 		$("button#turn").html("cpu");
 		doCPUMove()
 	}
-	
-/*	if(data.yours){
-		$("button#status").html(data.yours);
-		setBoard(data.board);
-		$("button#turn").html(data.begins);
-		if(data.begins == "cpu"){
-			doCPUMove();
-		}else{
-			enableBoard();
-		}
-	}*/
 }
 
 var YOURS_FAIL = function(jqXHR, textStatus){
 	$("button#begin").each(function(index , value){
 		$(value).prop("disabled",false);
 	});
-//	var output = '';
-//	for (property in jqXHR) {
-//	  output += property + ': ' + object[property]+'; ';
-//	}
 	$( "#dialog" ).html("Error: " + textStatus);
 	$( "#dialog" ).dialog({
 		modal: true ,
@@ -97,10 +82,6 @@ var BEGIN_FAIL = function(jqXHR, textStatus){
 	$("button#begin").each(function(index , value){
 		$(value).prop("disabled",false);
 	});
-//	var output = '';
-//	for (property in jqXHR) {
-//	  output += property + ': ' + object[property]+'; ';
-//	}
 	$( "#dialog" ).html("Error: " + textStatus);
 	$( "#dialog" ).dialog({
 		modal: true ,
@@ -151,31 +132,13 @@ var CPU_SUCCESS = function(data){
 		log("CPU" , data.time , data.log , data.moves);
 		$("button#turn").html("you");
 		enableBoard();
-//		doCPUMove()
 	}
-	
-	
-/*	$( "#dialog" ).dialog("close");
-	if(data.yours){
-		$("button#status").html(data.yours);
-		setBoard(data.board);
-		$("button#turn").html(data.begins);
-		if(data.begins == "cpu"){
-			doCPUMove();
-		}else{
-			enableBoard();
-		}
-	}*/
 }
 
 var CPU_FAIL = function(jqXHR, textStatus){
 	$("button#begin").each(function(index , value){
 		$(value).prop("disabled",false);
 	});
-//	var output = '';
-//	for (property in jqXHR) {
-//	  output += property + ': ' + object[property]+'; ';
-//	}
 	$( "#dialog" ).html("Error: " + jqXHR.responseText);
 	$( "#dialog" ).dialog({
 		modal: true ,
@@ -332,12 +295,10 @@ function getBoard(){
 			}
 		}
 	}
-//	alert(board)
 	return board;
 }
 
 function doYourMove(x , y){
-//	alert(x + " " + yours)
 	$( "#dialog" ).html("Waiting for Your to Move");
 	$( "#dialog" ).dialog({
 		modal: true ,
@@ -426,10 +387,4 @@ $(document).ready(function(){
 	});
 	$("button#begin").click(beginBoard);
 	$("button#reset").click(initState);
-	
-	
-	
-//	obj = $("body").find("div#board table tr button[data-x='1'][data-y='1']")
-//	$(obj).html("1")
-//	alert(obj.size())
 });

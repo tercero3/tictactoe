@@ -95,7 +95,6 @@ class TicTacToeCPU:
 			elif self.couldOppenetWin():
 				return self.blockOponnet()
 			else:
-#				self.getWiningPaths(self , player , opponent , moves = None)
 				paths = self.getWiningPaths(player = self.cpu , opponent = self.opponent , moves = 1)
 				print "winning pats %s" %paths
 				for path in paths:
@@ -156,8 +155,6 @@ class TicTacToeCPU:
 			for possible in path['possible_moves']:
 				x = possible[0]
 				y = possible[1]
-#				print "OUT %s %s" % (x , y)
-#				print "HERE"
 				if self.isCorner(x = x , y = y):
 					return x , y
 		return None , None
@@ -185,7 +182,6 @@ class TicTacToeCPU:
 						aux.append(path)
 				else:
 					aux.append(path)
-#		print aux
 		return aux
 
 	def getState(self , value):
@@ -237,14 +233,12 @@ class TicTacToeCPU:
 		
 	def getFreeCorner(self):
 		for position in self.CORNERS:
-#			print "POSITION: %s" %position
 			x , y = self.getPosition(position['x'] , position['y'])
 			if x and y:
 				return x , y
 		return None , None
 		
 	def getOppositeCorner(self , x , y):
-#		print "inner %s %s" %(x , y)
 		if x and y:
 			if int(x) == 0 and int(y) == 0:
 				return self.getPosition(2 , 2)
@@ -257,7 +251,6 @@ class TicTacToeCPU:
 		return None , None
 		
 	def getAsideCorner(self , x , y):
-#		print "inner %s %s" %(x , y)
 		if x and y:
 			if int(x) == 0 and int(y) == 0:
 				x, y = self.getPosition(0 , 2)
@@ -294,7 +287,6 @@ class TicTacToeCPU:
 		return None , None
 		
 	def getPosition(self , x , y):		
-#		print "getPosition %s-%s %s" % (x , y , self.current[x][y])
 		if self.current[x][y]:
 			return None , None
 		return x , y
@@ -361,17 +353,13 @@ class TicTacToeEngine:
 	}
 	
 	def setLast(self , last):
-#		print "setlast %s" %last
 		if last:
 			self.last = last
-#		print "setlast %s" %self.last
 	
 	def setBoard(self , state):
 		x = 0
 		y = 0
-#		print state
 		for s in state:
-#			print "%s X: %s Y: %s" % (s , x , y)
 			if s == "N":
 				self.current[x][y] = None
 			elif s == self._CROSS or s == self._NOUGHT:
@@ -383,19 +371,14 @@ class TicTacToeEngine:
 				x = x + 1
 			if x == 3:
 				break
-#		print self.current
 
 	def getBoard(self):
 		state = ""
-#		print self.current
 		for x , line in enumerate(self.current):
 			for y , pos in enumerate(line):
-#				print "x: %s y: %s v: %s " % (x , y , pos)
 				if pos is None:
 					pos = "N"
 				state = "%s%s" %(state , pos)
-#				state = "%s%s" %(pos , state )
-#		print state
 		return state
 
 	def getLog(self):
@@ -404,24 +387,18 @@ class TicTacToeEngine:
 			msg  = "%s %s" % (msg , "Top Left Corner")
 		elif self.last['y'] == 0 and self.last['x'] == 1:
 			msg  = "%s %s" % (msg , "Middle Left Position")
-#			msg  = "%s %s" % (msg , "Top Middle Position")
 		elif self.last['y'] == 0 and self.last['x'] == 2:
-#			msg  = "%s %s" % (msg , "Top Right Corner")
 			msg  = "%s %s" % (msg , "Bottom Right Corner")
 		elif self.last['y'] == 1 and self.last['x'] == 0:
 			msg  = "%s %s" % (msg , "Top Middle Position")
-#			msg  = "%s %s" % (msg , "Middle Left Position")
 		elif self.last['y'] == 1 and self.last['x'] == 1:
 			msg  = "%s %s" % (msg , "Center Position")
 		elif self.last['y'] == 1 and self.last['x'] == 2:
-#			msg  = "%s %s" % (msg , "Middle Right Position")
 			msg  = "%s %s" % (msg , "Bottom Middle Position")
 		elif self.last['y'] == 2 and self.last['x'] == 0:
 			msg  = "%s %s" % (msg , "Top Right Corner")
-#			msg  = "%s %s" % (msg , "Bottom Left Corner")
 		elif self.last['y'] == 2 and self.last['x'] == 1:
 			msg  = "%s %s" % (msg , "Middle Right Position")
-#			msg  = "%s %s" % (msg , "Bottom Middle Position")
 		elif self.last['y'] == 2 and self.last['x'] == 2:
 			msg  = "%s %s" % (msg , "Bottom Right Corner")
 		return msg
@@ -443,7 +420,6 @@ class TicTacToeEngine:
 		return False
 	
 	def hasWon(self , state):
-#		print "has won state: %s" % state
 		if self.moves == 9:
 			return False
 		for win in self.wins:
@@ -482,19 +458,15 @@ class TicTacToeEngine:
 			'x'		: 	x ,
 			'y'		:	y ,
 		}
-#		print self.current
 		
 	def move(self , value , x , y):
-#		print "move last:%s x:%s y:%s" %(self.last , x , y)
 		if value == self.last['value']:
-#			raise Exception("You can not Move Because is not Your Turn last: %s you: %s" % (self.last['value'] , value))
 			raise Exception("You can not Move Because is not Your Turn")
 		self.setMovement(value , x , y)
 		state = self.getState(value)
 		self.blank = self.getState(None)
 		if self.hasWon(state):
 			msg = "%s has won" % value
-#			print msg
 			msg = "WON"
 			raise Exception(msg)
 		elif self.isDraw():
